@@ -71,15 +71,15 @@ local function markerListener( event )
 end
 
 local function addStarbucks( event , id )
-	local options = { 
-		title="Starbucks", 
-		subtitle=starbucksLocations[id], 
-	    imageFile = 
+	local options = {
+		title="Starbucks",
+		subtitle=starbucksLocations[id],
+	    imageFile =
 	    {
     	    filename = "images/starbucks.png",
         	baseDir = system.ResourcesDirectory
     	},
-		listener=markerListener 
+		listener=markerListener
 	}
 	myMap:addMarker(event.latitude, event.longitude, options)
 end
@@ -88,15 +88,15 @@ local function mapLocationHandler(event)
 	myMap:setCenter( event.latitude, event.longitude, false )
     myMap:setRegion( event.latitude, event.longitude, 0.25, 0.25, false)
     print("adding office marker")
-    local options = { 
-    	title="Corona Labs", 
-    	subtitle="World HQ", 
-	    imageFile = 
+    local options = {
+    	title="Corona Labs",
+    	subtitle="World HQ",
+	    imageFile =
 	    {
     	    filename = "images/coronamarker.png",
         	baseDir = system.ResourcesDirectory
     	},
-       	listener=markerListener 
+       	listener=markerListener
     }
 	result, errorMessage = myMap:addMarker( event.latitude, event.longitude, options )
 	if result then
@@ -126,7 +126,7 @@ local function textFieldHandler( textField )
 			-- In some cases you may want to adjust the interface when the keyboard appears.
 
 		elseif ( "editing" == event.phase ) then
-		
+
 		elseif ( "submitted" == event.phase or "ended" == event.phase ) then
 			-- This event occurs when the user presses the "return" key (if available) on the onscreen keyboard
 	        print( "Final Text: ", event.target.text)
@@ -206,9 +206,9 @@ function scene:create( event )
 	views[1].mode = "standard"
 	sceneGroup:insert(views[1])
 	sceneGroup:insert(views[1].label)
-	
+
 	views[2] = display.newRect(0,0,tabWidth,30)
-	views[2].x = display.contentCenterX 
+	views[2].x = display.contentCenterX
 	views[2].y = mapbox.y + (mapbox.height / 2) + 12
 	views[2]:setFillColor( 1, 1, 0.75 )
 	views[2]:setStrokeColor(0.875, 0.875, 0.75 )
@@ -248,16 +248,16 @@ function scene:show( event )
 		local fieldWidth = display.contentWidth - 120
 
 		addressField = native.newTextField( 110, addressLabel.y, fieldWidth, 30 )
-		addressField:addEventListener( "userInput", textFieldHandler( function() return addressField end ) ) 
+		addressField:addEventListener( "userInput", textFieldHandler( function() return addressField end ) )
 		addressGroup:insert( addressField)
 		addressField.anchorX = 0
 		addressField.placeholder = "Address"
 
 		--
-		-- Because mapViews's are native objects, the cannot intermix with the OpenGL objects that composer is 
-		-- managing.  It's best to create it here and destory it in exitScene.  
+		-- Because mapViews's are native objects, the cannot intermix with the OpenGL objects that composer is
+		-- managing.  It's best to create it here and destory it in exitScene.
 
-		myMap = native.newMapView( 0, 0, mapWidth , mapHeight ) 
+		myMap = native.newMapView( 0, 0, mapWidth , mapHeight )
 		if myMap then
 			myMap.mapType = "standard" -- other mapType options are "satellite" or "hybrid"
 

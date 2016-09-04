@@ -41,7 +41,8 @@ DEALINGS IN THE SOFTWARE.
 local composer = require ( "composer" )
 local widget = require( "widget" )
 local json = require( "json" )
-local myApp = require( "myapp" ) 
+local myApp = require( "myapp" )
+
 
 if (display.pixelHeight/display.pixelWidth) > 1.5 then
     myApp.isTall = true
@@ -55,7 +56,7 @@ math.randomseed(os.time())
 
 --
 -- Initialize database
--- 
+--
 local db = require( "database" )
 local myScheme = {}
 myScheme["__tableName"] = "accounts"
@@ -72,7 +73,7 @@ db.init( "mydatabase.db", myScheme )
 
 
 -- NOTE: In a real app you should do a one way encryption on the password field and never store it in clear text.
--- It's always best to encrypt it, and compare it to the encryptied value in the database. 
+-- It's always best to encrypt it, and compare it to the encryptied value in the database.
 -- MD5 hash's are easy encrytption for passwwords, bt most hackers have already gotten MD5 password hashes for most
 -- common passwords anyway.
 
@@ -119,18 +120,18 @@ widget.setTheme(myApp.theme)
 -- triggered when the user taps the buttons in the bottom tabView
 --
 --
--- These should be pretty straight forward.  You need to provide a local file 
+-- These should be pretty straight forward.  You need to provide a local file
 -- name to download the feed to (feedName), the URL to fetch from, displayMode
 -- can be either "podcaset" or "webpage", which tells the module how to handle
 -- the story body.
 -- pageTitle is the thing that shows at the top of the list view.
 --
 --
--- The variable "composer" is just a Lua table that is returned from the 
+-- The variable "composer" is just a Lua table that is returned from the
 -- require("composer" above.  As such, I can freely add members/attributes/entries
--- to the table.  By using this technique, I can quickly pass data between 
--- composer scenes.  It's like making them global without the penalties of 
--- making them global.  There is one catch... Corona Labs could come along and 
+-- to the table.  By using this technique, I can quickly pass data between
+-- composer scenes.  It's like making them global without the penalties of
+-- making them global.  There is one catch... Corona Labs could come along and
 -- add theor own "displayMode" member (or any of them) later and trump yours
 -- but the risk is minmal.
 --
@@ -151,10 +152,11 @@ function myApp.showScreen2(event)
         feedURL = "https://www.coronalabs.com/feed/",
         icons = "fixed",
         displayMode = "webpage",
-        pageTitle = "Corona Labs"
+        pageTitle = ""
     }
+
     composer.removeHidden()
-    composer.gotoScene("feed", {time=250, effect="crossFade", params = options})
+    composer.gotoScene("MyProfile", {time=250, effect="crossFade", params = options})
     return true
 end
 
@@ -194,7 +196,7 @@ function myApp.showScreen6()
     myApp.tabBar:setSelected(6)
     local options = {
 
-        pageTitle = "Data Table"
+        pageTitle = "PlayList"
     }
     composer.removeHidden()
     composer.gotoScene("datatable", {time=250, effect="crossFade", params = options})
@@ -215,8 +217,8 @@ local tabButtons = {
         label = "Menu",
         defaultFile = "images/tabbaricon.png",
         overFile = "images/tabbaricon-down.png",
-        labelColor = { 
-            default = { 0.25, 0.25, 0.25 }, 
+        labelColor = {
+            default = { 0.25, 0.25, 0.25 },
             over = { 0.768, 0.516, 0.25 }
         },
         width = 32,
@@ -225,11 +227,11 @@ local tabButtons = {
         selected = true,
     },
     {
-        label = "Blogs",
+        label = "MyProfile",
         defaultFile = "images/tabbaricon.png",
         overFile = "images/tabbaricon-down.png",
-        labelColor = { 
-            default = { 0.25, 0.25, 0.25 }, 
+        labelColor = {
+            default = { 0.25, 0.25, 0.25 },
             over = { 0.768, 0.516, 0.25 }
         },
         width = 32,
@@ -240,8 +242,8 @@ local tabButtons = {
         label = "Pics",
         defaultFile = "images/tabbaricon.png",
         overFile = "images/tabbaricon-down.png",
-        labelColor = { 
-            default = { 0.25, 0.25, 0.25 }, 
+        labelColor = {
+            default = { 0.25, 0.25, 0.25 },
             over = { 0.768, 0.516, 0.25 }
         },
         width = 32,
@@ -249,23 +251,11 @@ local tabButtons = {
         onPress = myApp.showScreen3,
     },
     {
-        label = "Video",
-        defaultFile = "images/tabbaricon.png",
-        overFile = "images/tabbaricon-down.png",
-        labelColor = { 
-            default = { 0.25, 0.25, 0.25 }, 
-            over = { 0.768, 0.516, 0.25 }
-        },
-        width = 32,
-        height = 32,
-        onPress = myApp.showScreen4,
-    },
-    {
         label = "Map",
         defaultFile = "images/tabbaricon.png",
         overFile = "images/tabbaricon-down.png",
-        labelColor = { 
-            default = { 0.25, 0.25, 0.25 }, 
+        labelColor = {
+            default = { 0.25, 0.25, 0.25 },
             over = { 0.768, 0.516, 0.25 }
         },
         width = 32,
@@ -273,11 +263,23 @@ local tabButtons = {
         onPress = myApp.showScreen5,
     },
     {
-        label = "Data",
+        label = "Genres",
         defaultFile = "images/tabbaricon.png",
         overFile = "images/tabbaricon-down.png",
-        labelColor = { 
-            default = { 0.25, 0.25, 0.25 }, 
+        labelColor = {
+            default = { 0.25, 0.25, 0.25 },
+            over = { 0.768, 0.516, 0.25 }
+        },
+        width = 32,
+        height = 32,
+        onPress = myApp.showScreen4,
+    },
+    {
+        label = "PlayList",
+        defaultFile = "images/tabbaricon.png",
+        overFile = "images/tabbaricon-down.png",
+        labelColor = {
+            default = { 0.25, 0.25, 0.25 },
             over = { 0.768, 0.516, 0.25 }
         },
         width = 32,
@@ -295,10 +297,10 @@ myApp.tabBar = widget.newTabBar{
     tabSelectedRightFile = tabBarRight,    -- New
     tabSelectedMiddleFile = tabBarMiddle,      -- New
     tabSelectedFrameWidth = 20,                                         -- New
-    tabSelectedFrameHeight = 50,                                        -- New    
+    tabSelectedFrameHeight = 50,                                        -- New
     buttons = tabButtons,
     height = 50,
-    --background="images/tabBarBg7.png"
+    background="images/tabBarBg7.png"
 }
 
 
@@ -307,11 +309,11 @@ background:setFillColor( 1, 1, 1 )
 background.x = display.contentCenterX
 background.y = display.contentCenterY
 
-local logo = display.newImageRect("Splash.png", 320, 480)
+local logo = display.newImageRect("photos/MaimiSkyline.jpg", 320, 480)
 logo.x = display.contentCenterX
 logo.y = display.contentCenterY
 
-local title = display.newText("Business Sample App", 0, 0, myApp.fontBold, 28)
+local title = display.newText("photos/MaimiSkyline.jpg", 0, 0, myApp.fontBold, 28)
 title:setFillColor( 0, 0, 0 )
 title.x = display.contentCenterX
 title.y = display.contentHeight - 64

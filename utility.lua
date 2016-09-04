@@ -3,11 +3,12 @@ local socket = require("socket")
 local http = require("socket.http")
 local ltn12 = require("ltn12")
 
+
 M = {}
 
 M.isSimulator = ("simulator" == system.getInfo("environment"))
 
-function M.print_r ( t ) 
+function M.print_r ( t )
     local print_r_cache={}
     local function sub_print_r(t,indent)
         if (print_r_cache[tostring(t)]) then
@@ -42,7 +43,7 @@ function M.print_r ( t )
 end
 
 function M.testNetworkConnection()
-    print("testing connection") 
+    print("testing connection")
     if http.request( "http://google.com/" ) == nil then
         print("cant connect to google")
         return false
@@ -67,7 +68,7 @@ function M.saveTable(t, filename)
         return false
     end
 end
- 
+
 function M.loadTable(filename)
     local path = system.pathForFile( filename, system.DocumentsDirectory)
     local contents = ""
@@ -98,14 +99,14 @@ function M.urlencode(str)
         function (c) return string.format ("%%%02X", string.byte(c)) end)
     str = string.gsub (str, " ", "+")
   end
-  return str    
+  return str
 end
 
 function M.makeTimeStamp(dateString)
     local pattern = "(%d+)%-(%d+)%-(%d+)T(%d+):(%d+):(%d+)([%+%-])(%d+)%:(%d+)"
-    local xyear, xmonth, xday, xhour, xminute, 
+    local xyear, xmonth, xday, xhour, xminute,
         xseconds, xoffset, xoffsethour, xoffsetmin = dateString:match(pattern)
-    local convertedTimestamp = os.time({year = xyear, month = xmonth, 
+    local convertedTimestamp = os.time({year = xyear, month = xmonth,
         day = xday, hour = xhour, min = xminute, sec = xseconds})
     local offset = xoffsethour * 60 + xoffsetmin
     if xoffset == "-" then offset = offset * -1 end
@@ -121,7 +122,7 @@ function string:split( inSplitPattern, outResults )
     outResults = { }
   end
   local theStart = 1
-  local theSplitStart, theSplitEnd = string.find( self, inSplitPattern, 
+  local theSplitStart, theSplitEnd = string.find( self, inSplitPattern,
 theStart )
   while theSplitStart do
     table.insert( outResults, string.sub( self, theStart, theSplitStart-1 ) )

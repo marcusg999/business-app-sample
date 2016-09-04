@@ -36,7 +36,6 @@ DEALINGS IN THE SOFTWARE.
 
 local composer = require( "composer" )
 local scene = composer.newScene()
-
 local widget = require( "widget" )
 local widgetExtras = require("widget-extras")
 local myApp = require( "myapp" )
@@ -56,32 +55,34 @@ function scene:create( event )
 	local sceneGroup = self.view
 
 	local background = display.newRect(0,0,display.contentWidth, display.contentHeight)
+
 	background:setFillColor( 0.95, 0.95, 0.95 )
-    background.x = display.contentCenterX
+    -- background.x = display.contentCenterX
     background.y = display.contentCenterY
 	sceneGroup:insert(background)
 	background:addEventListener("touch", ignoreTouch)
 
     local navBar = widget.newNavigationBar({
         title = "Beat Matched",
+        background = "photos/MaimiSkyline.jpg",
         backgroundColor = { 0.41, 0.51, 0.6 },
+        fontSize = 45,
         titleColor = {1, 1, 1},
         font = myApp.fontBold
     })
     sceneGroup:insert(navBar)
 
-
     local button1 = widget.newButton({
     	width = 160,
     	height = 40,
-    	label = "Current Playlist",
+    	label = "My Profile",
         labelColor = {
-            default = { 0.41, 0.51, 0.6 },
+            default = { 0.94, 0.22, 0.16 },
             over = { 0.79, 0.48, 0.30 }
         },
     	labelYOffset = -4,
-    	font = myApp.font,
-    	fontSize = 18,
+    	font = myApp.fontBold,
+    	fontSize = 43,
     	emboss = false,
     	onRelease = myApp.showScreen2
     })
@@ -95,12 +96,12 @@ function scene:create( event )
     	height = 40,
     	label = "Genres",
         labelColor = {
-            default = { 0.41, 0.51, 0.6 },
+            default = { 0.94, 0.22, 0.16 },
             over = { 0.79, 0.48, 0.30 }
         },
     	labelYOffset = -4,
-    	font = myApp.font,
-    	fontSize = 18,
+    	font = myApp.fontBold,
+    	fontSize = 43,
     	emboss = false,
     	onRelease = myApp.showScreen3
     })
@@ -112,14 +113,14 @@ function scene:create( event )
     local button3 = widget.newButton({
     	width = 160,
     	height = 40,
-    	label = "Preferences",
+    	label = "PlayList",
         labelColor = {
-            default = { 0.41, 0.51, 0.6 },
+            default = { 0.94, 0.22, 0.16 },
             over = { 0.79, 0.48, 0.30 }
         },
     	labelYOffset = -4,
-    	font = myApp.font,
-    	fontSize = 18,
+    	font = myApp.fontBold,
+    	fontSize = 43,
     	emboss = false,
     	onRelease = myApp.showScreen4
     })
@@ -132,12 +133,12 @@ function scene:create( event )
     	height = 40,
     	label = "Map",
         labelColor = {
-            default = { 0.41, 0.51, 0.6 },
+            default = { 0.94, 0.22, 0.16 },
             over = { 0.79, 0.48, 0.30 }
         },
     	labelYOffset = -4,
-    	font = myApp.font,
-    	fontSize = 18,
+    	font = myApp.fontBold,
+    	fontSize = 43,
     	emboss = false,
     	onRelease = myApp.showScreen5
     })
@@ -150,12 +151,12 @@ function scene:create( event )
         height = 40,
         label = "",
         labelColor = {
-            default = { 0.41, 0.51, 0.6 },
-            over = { 0.79, 0.48, 0.30 }
+            default = { 0.94, 0.22, 0.16 },
+            over = { 0.94, 0.22, 0.16 }
         },
         labelYOffset = -4,
-        font = myApp.font,
-        fontSize = 18,
+        font = myApp.fontBold,
+        fontSize = 43,
         emboss = false,
         onRelease = myApp.showScreen6
     } )

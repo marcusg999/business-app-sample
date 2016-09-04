@@ -36,7 +36,6 @@ DEALINGS IN THE SOFTWARE.
 
 local composer = require( "composer" )
 local scene = composer.newScene()
-
 local widget = require("widget")
 local myApp = require("myapp")
 
@@ -58,7 +57,7 @@ function scene:create( event )
     local sceneGroup = self.view
 
     local story = event.params.story
-        
+
     --
     -- setup a page background, really not that important, but if we don't
     -- have at least one display object in the view, it will crash.
@@ -115,20 +114,20 @@ function scene:show( event )
         navBar:setLabel( title )
 
         -- if the reader choses to see the article in the web browser, open it.
-        
+
         local function viewWebPage(event)
             system.openURL( story.link )
         end
 
         -- now we write out the story body, which likely has HTML code in it to a
         -- temporary file that we will load back in to our web view.
-        
+
         local path = system.pathForFile( "story.html", system.TemporaryDirectory )
-     
+
         -- io.open opens a file at path. returns nil if no file found
         local fh, errStr = io.open( path, "w" )
-     
-        -- 
+
+        --
         -- Write out the required headers to make sure the content fits into our
         -- window and then dump the body.
         --
@@ -157,7 +156,7 @@ function scene:show( event )
         --
         local function webListener(event)
             print("showWebPopup callback")
-            
+
             local url = event.url
 
             if( string.find( url, "http:" ) ~= nil or string.find( url, "mailto:" ) ~= nil ) then
@@ -167,7 +166,7 @@ function scene:show( event )
 
             return true
         end
-       
+
         local isTall = 0
         if myApp.isTall then
             isTall = 88
@@ -193,7 +192,7 @@ function scene:show( event )
         play_button.y = display.contentHeight - 80
         sceneGroup:insert(play_button)
         play_button:addEventListener("tap", viewWebPage)
-    end              
+    end
 end
 
 function scene:hide( event )
@@ -212,7 +211,7 @@ end
 
 function scene:destroy( event )
     local sceneGroup = self.view
-    
+
 end
 
 

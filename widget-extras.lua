@@ -14,20 +14,20 @@ function widget.newSharingPanel( services )
         end
 
         if popupName == "mail" then
-            native.showPopup( popupName, 
+            native.showPopup( popupName,
             {
                 body = body,
                 attachment = attachment,
             })
         elseif popupName == "sms" then
-            native.showPopup( popupName, 
+            native.showPopup( popupName,
             {
                 body = body,
             })
         elseif popupName == "social" then
             local isAvailable = native.canShowPopup( popupName, service )
             if isAvailable then
-                native.showPopup( popupName, 
+                native.showPopup( popupName,
                 {
                     service = service,
                     message = message,
@@ -77,15 +77,15 @@ function widget.newSharingPanel( services )
     })
 
     local tableView = widget.newTableView({
-        top = 0, 
+        top = 0,
         left = 0,
-        width = display.contentWidth - 16, 
-        height = 240, 
-        hideBackground = false, 
+        width = display.contentWidth - 16,
+        height = 240,
+        hideBackground = false,
         backgroundColor = { 0.9 },
         noLines = true,
         onRowRender = onRowRender,
-        onRowTouch = onRowTouch 
+        onRowTouch = onRowTouch
     })
     tableView.x = 0
     tableView.y = 0
@@ -161,7 +161,7 @@ function widget.newPanel( options )
     local opt = {}
 
     opt.location = customOptions.location or "top"
-    
+
     local default_width, default_height
     if ( opt.location == "top" or opt.location == "bottom" ) then
         default_width = display.contentWidth
@@ -170,7 +170,7 @@ function widget.newPanel( options )
         default_width = display.contentWidth * 0.33
         default_height = display.contentHeight
     end
-    
+
     opt.width = customOptions.width or default_width
     opt.height = customOptions.height or default_height
     opt.speed = customOptions.speed or 500
@@ -182,7 +182,7 @@ function widget.newPanel( options )
     else
         opt.listener = nil
     end
-    
+
     local container = display.newContainer( opt.width, opt.height )
     if ( opt.location == "left" ) then
         container.anchorX = 1.0
@@ -283,7 +283,7 @@ function widget.newTextField(options)
     local field = display.newGroup()
 
     local deviceScale = (display.pixelWidth / display.contentWidth) * 0.5
-    
+
     local bgWidth = opt.width
     --if widget.isSeven() then
     --    bgWidth = bgWidth + opt.labelWidth -- make room in the box for the label
@@ -314,12 +314,12 @@ function widget.newTextField(options)
 
     local labelParameters = {
         x = 0,
-        y = 0, 
+        y = 0,
         text = opt.label,
         width = opt.labelWidth,
         height = 0,
         font = opt.labelFont,
-        fontSize = opt.labelFontSize, 
+        fontSize = opt.labelFontSize,
         align = "left"
     }
     local fieldLabel = display.newText(labelParameters)
@@ -365,13 +365,13 @@ function widget.newTextField(options)
     --function field.textField:_inputListener( event )
     function field.textField._inputListener( event )
         local phase = event.phase
-        
+
         if "began" == phase then
             -- make sure we are in a display group
-            -- the trick is our master object is a group, so we need to make sure our 
+            -- the trick is our master object is a group, so we need to make sure our
             -- grandparent isn't the stage
             if display.getCurrentStage() ~= event.target.parent.parent then
-                -- make a guess at the keyboard height.  
+                -- make a guess at the keyboard height.
                 local kbHeight = 0.5 * display.contentHeight
                 local fieldLoc = 0.25 * display.contentHeight
                 -- scroll into view
@@ -379,14 +379,14 @@ function widget.newTextField(options)
                     event.target.yOrig = self.y
                     transition.to(event.target.parent.parent, {time=500, y = fieldLoc})
                 end
-            end 
+            end
         elseif "submitted" == phase or "ended" == phase then
             -- Hide keyboard
             if event.target.yOrig ~= event.target.y then -- we have been scrolled
                 transition.to(event.target.parent.parent, {time=500, y = event.target.yOrig})
             end
         end
-        
+
         -- If there is a listener defined, execute it
         local e = {}
         e.newCharacters = event.newCharacters
@@ -401,7 +401,7 @@ function widget.newTextField(options)
             event.target._listener( e )
         end
     end
-    
+
     --field.textField.userInput = field.textField._inputListener
     field.textField:addEventListener( "userInput", field.textField._inputListener )
     field.textField.id = opt.id
@@ -411,13 +411,13 @@ function widget.newTextField(options)
     field.textField.size = opt.fontSize * deviceScale
 
     local function syncFields(event)
-        if field and field.textField then 
+        if field and field.textField then
             field.textField.x = field.x + labelPadding
             field.textField.y = field.y
             field.textField.alpha = field.alpha
             if not field.isVisible then
                 -- move the text field off screen when the display field is hidden
-                field.textField.y = field.textField.y * -1 
+                field.textField.y = field.textField.y * -1
             end
         end
     end
@@ -432,7 +432,7 @@ function widget.newTextField(options)
     field:addEventListener( "finalize" )
 
     return field
-end  
+end
 
 
 function widget.newNavigationBar( options )
@@ -483,7 +483,7 @@ function widget.newNavigationBar( options )
         background.fill = opt.backgroundColor
     else
         if widget.isSeven() then
-            background.fill = {1,1,1} 
+            background.fill = {1,1,1}
         else
             background.fill = { type = "gradient", color1={0.5, 0.5, 0.5}, color2={0, 0, 0}}
         end

@@ -44,7 +44,7 @@ local utility = require( "utility" )
 
 widget.setTheme(myApp.theme)
 
-local backButton 
+local backButton
 local playButton
 local titleText
 local webView
@@ -56,12 +56,12 @@ end
 
 function scene:create( event )
     local sceneGroup = self.view
-        
+
     local params = event.params
     local story = event.params.story
 
     --
-    -- setup a page background, really not that important 
+    -- setup a page background, really not that important
     --
 
     print("create scene")
@@ -111,14 +111,14 @@ function scene:show( event )
         end
 
         navBar:setLabel( title )
-        
+
         --utility.print_r( story )
 
         -- do nothing when the podcast finishes playing.
         local function onComplete(event)
             return true
         end
-        
+
         -- function to play the podcast.  We get the URL to stream from the story.enclosures
         -- table.
         local function playPodcast()
@@ -126,20 +126,20 @@ function scene:show( event )
             media.playVideo( story.link, media.RemoteSource, true, onComplete )
             return true
         end
-        
+
         local function viewWebPage(event)
             system.openURL( story.link )
         end
 
         -- now we write out the story body, which likely has HTML code in it to a
         -- temporary file that we will load back in to our web view.
-        
+
         local path = system.pathForFile( "story.html", system.TemporaryDirectory )
-     
+
         -- io.open opens a file at path. returns nil if no file found
         local fh, errStr = io.open( path, "w" )
-     
-        -- 
+
+        --
         -- Write out the required headers to make sure the content fits into our
         -- window and then dump the body.
         --
@@ -152,7 +152,7 @@ function scene:show( event )
             if story.title then
                 fh:write("<h1>" .. story.title .. "</h1>\n")
             end
-            if story.link then 
+            if story.link then
                 local videoID = story.link:sub(32, 42)
                 --print(videoID)
                 local height = math.floor(display.contentWidth / 16 * 9)
@@ -175,7 +175,7 @@ function scene:show( event )
         --
         local function webListener(event)
             print("showWebPopup callback")
-            
+
             local url = event.url
 
             if string.find(url, "http://www.youtube.com") then
@@ -189,7 +189,7 @@ function scene:show( event )
 
             return true
         end
-       
+
         local isTall = 0
         if myApp.isTall then
             isTall = 88
@@ -200,7 +200,7 @@ function scene:show( event )
     --    local options = { hasBackground=false, baseUrl=system.TemporaryDirectory, urlRequest=listener }
         --local options = { hasBackground=true,  urlRequest=listener }
     --    native.showWebPopup(0, 51 + 60 + 20 + 60, display.contentWidth, 220 + isTall, "story.html", options )
-        
+
         webView = native.newWebView(0, 71, display.contentWidth, display.contentHeight - 150)
         webView.x = display.contentCenterX
         webView.y = navBar.y + 50 + display.topStatusBarContentHeight
@@ -213,12 +213,12 @@ function scene:show( event )
         play_button.y = display.contentHeight - 80
         sceneGroup:insert(play_button)
         play_button:addEventListener("tap", viewWebPage)
-    end                  
+    end
 end
 
 function scene:hide( event )
     local sceneGroup = self.view
-    
+
     --
     -- Clean up any native objects and Runtime listeners, timers, etc.
     --
@@ -227,12 +227,12 @@ function scene:hide( event )
             webView:removeSelf()
             webView = nil
         end
-    end   
+    end
 end
 
 function scene:destroy( event )
     local sceneGroup = self.view
-    
+
     print("destroy scene")
 end
 
